@@ -54,4 +54,18 @@ public class Recipe {
 	@ManyToMany
 	@JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
+
+	public void setNotes(Notes notes) {
+		this.notes = notes;
+		notes.setRecipe(this);
+	}
+
+	public void addIngridient(Ingredient ingredient) {
+		ingredients.add(ingredient);
+		ingredient.setRecipe(this);
+	}
+	public void addCategory(Category category) {
+		categories.add(category);
+		category.addRecipe(this);
+	}
 }

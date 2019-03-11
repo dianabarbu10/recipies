@@ -1,5 +1,6 @@
 package diana.springframework.recipes.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -21,5 +22,11 @@ public class Category {
 	private String description;
 
 	@ManyToMany(mappedBy = "categories")
-	private Set<Recipe> recipes;
+	private Set<Recipe> recipes = new HashSet<>();
+
+	public void addRecipe(Recipe recipe) {
+		recipes.add(recipe);
+		// TODO Auto-generated method stub
+
+	}
 }
