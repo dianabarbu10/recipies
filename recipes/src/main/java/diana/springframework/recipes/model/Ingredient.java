@@ -10,13 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Ingredient {
 
@@ -32,5 +30,13 @@ public class Ingredient {
 
 	@OneToOne(fetch = FetchType.EAGER)
 	private UnitOfMeasure unitOfMeasure;
+
+	public Ingredient(String description, BigDecimal ammount,
+			UnitOfMeasure unitOfMeasure, Recipe recipe) {
+		this.description = description;
+		this.ammount = ammount;
+		this.recipe = recipe;
+		this.unitOfMeasure = unitOfMeasure;
+	}
 
 }
