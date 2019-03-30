@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +18,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 public class Recipe {
 
@@ -39,7 +42,7 @@ public class Recipe {
 	@Lob
 	private String directions;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe", fetch = FetchType.EAGER)
 	private Set<Ingredient> ingredients = new HashSet<>();
 
 	@Lob
@@ -51,7 +54,7 @@ public class Recipe {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Notes notes;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 
@@ -65,7 +68,11 @@ public class Recipe {
 		ingredient.setRecipe(this);
 	}
 	public void addCategory(Category category) {
-		categories.add(category);
 		category.addRecipe(this);
+		categories.add(category);
+	}
+	@Override
+	public String toString() {
+		return id + " " + description;
 	}
 }

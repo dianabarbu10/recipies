@@ -11,9 +11,13 @@ public class IndexController {
 	@Autowired
 	private RecipeService recipeService;
 
+	public IndexController(RecipeService recipeService) {
+		this.recipeService = recipeService;
+	}
+
 	@RequestMapping({"", "/", "/index"})
 	public String getIndex(Model model) {
-
+		System.out.println("I know i am here");
 		model.addAttribute("recipes", recipeService.getRecipes());
 		return "index";
 	}
